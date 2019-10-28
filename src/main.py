@@ -38,3 +38,5 @@ except Exception as e:
     
 finally:   
     ser.close()
+    
+#This line was added in eclipse
