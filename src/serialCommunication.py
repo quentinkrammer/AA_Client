@@ -5,12 +5,12 @@ Created on Thu Oct 24 13:12:44 2019
 """
 import serial
 
-class serialCommunication:    
+class SerialCommunication:    
     
     def __init__(self, baudrate=115200, port="COM16"):
         self.ser = serial.Serial()
-        self.baudrate = baudrate
-        self.port = port
+        self.ser.baudrate = baudrate
+        self.ser.port = port
         #ser.timeout = 0.500
         self.ser.open()
  
@@ -30,21 +30,21 @@ class serialCommunication:
         try:            
             cmd += "\n"
             self.ser.write(cmd.encode())
-            if "ANT:ACT" in cmd:
-                replies.append (self.readNextMsg(self))  #echo      
-                replies.append (self.readNextMsg(self)) 
-            elif "" in cmd:
-                replies.append (self.readNextMsg(self))  #echo         
-                replies.append (self.readNextMsg(self))
-                replies.append (self.readNextMsg(self)) 
+            if "ANT:ACT" in cmd\
+            or "ANT:DEACT" in cmd\
+            or "ANT:SWITCH" in cmd\
+            or "SYS:ON" in cmd\
+            or "SYS:OFF" in cmd:
+                replies.append (self.readNextMsg())  #echo      
+                replies.append (self.readNextMsg()) 
+            elif "SYS:DIST" in cmd:
+                replies.append (self.readNextMsg())  #echo         
+                replies.append (self.readNextMsg())
+                replies.append (self.readNextMsg())
+                replies.append (self.readNextMsg())
             else:
-                replies.append (self.readNextMsg(self))  #echo         
-                replies.append (self.readNextMsg(self))
-                replies.append (self.readNextMsg(self))
-                replies.append (self.readNextMsg(self))
-
-
-    
+                replies.append (self.readNextMsg())  #echo   
+                
         except Exception as e:
             print(e)
             
