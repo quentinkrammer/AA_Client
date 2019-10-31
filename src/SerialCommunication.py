@@ -11,18 +11,19 @@ class SerialCommunication:
         self.ser = serial.Serial()
         self.ser.baudrate = baudrate
         self.ser.port = port
-        #ser.timeout = 0.500
+        self.ser.timeout = 1
         self.ser.open()
  
     def readNextMsg(self):
         msg = ""
         endOfMsg = False
-        while(not endOfMsg):
-            char = self.ser.read().decode()        
-            if char == "\n":
-                endOfMsg = True
+        while(True):
+            byte = self.ser.read()
+            char = byte.decode()        
+            if char == "\n" or not char:
+                break
             else:
-                msg += char  
+                msg += char                
         return msg
     
     def parseCmd(self, cmd):
@@ -30,29 +31,15 @@ class SerialCommunication:
         try:            
             cmd += "\n"
             self.ser.write(cmd.encode())
-            if "ANT:ACT" in cmd\
-            or "ANT:DEACT" in cmd\
-            or "ANT:SWITCH" in cmd\
-            or "SYS:ON" in cmd\
-            or "SYS:OFF" in cmd:
-                replies.append (self.readNextMsg())  #echo      
-                replies.append (self.readNextMsg()) 
-            elif "SYS:DIST" in cmd:
-                replies.append (self.readNextMsg())  #echo         
-                replies.append (self.readNextMsg())
-                replies.append (self.readNextMsg())
-                replies.append (self.readNextMsg())
-            else:
-                replies.append (self.readNextMsg())  #echo   
-                
+            while(True):
+                msg = self.readNextMsg()                
+                if not msg:
+                    break
+                replies.append(msg)
+#                             
         except Exception as e:
             print(e)
             
         finally:   
             self.ser.close()        
             return replies
-
-    
-    
-        
-    #This line was added in eclipse
