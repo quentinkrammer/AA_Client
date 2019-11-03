@@ -2,62 +2,70 @@
 
 import os
 import wx
+from wx._core import ID_ANY
 
 class GUI_BasicCmdBtn():
-    def __init__(self):
-        self.basicBtns  = []
-        self.basicBtns.append( {
+    def __init__(self, frame):
+        self.frame = frame
+        self.basicCmds  = []
+        self.basicCmds.append( {
           "cmd": "ANT:ACT",          
           "numberOfInputValues": 1
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "ANT:DEACT",          
           "numberOfInputValues": 1
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "ANT:SWITCH",          
           "numberOfInputValues": 2
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "ANT:SWITCH:CONT",          
           "numberOfInputValues": 2
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "ANT:SWITCH:OFF",          
           "numberOfInputValues": 0
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "SYS:DIST",          
           "numberOfInputValues": 1
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "SYS:ANG",          
           "numberOfInputValues": 1
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "SYS:ON",          
           "numberOfInputValues": 0
         } )
-        self.basicBtns.append( {
+        self.basicCmds.append( {
           "cmd": "SYS:OFF",          
           "numberOfInputValues": 0
         } )
-        
-    def appendButtons(self, frame):
-        sizer_outerFrame = wx.BoxSizer(wx.VERTICAL)      
-        for btns in self.basicBtns:
-            sizer_innerFrame = wx.BoxSizer(wx.HORIZONTAL)
-            button = wx.Button(frame, -1, btns["cmd"])
+        self.sizer = wx.BoxSizer(wx.VERTICAL) 
+        self.menuItems = []
+        self.iniBasicCmdMenu()
+                
+    def iniBasicCmdMenu(self):        
+        for cmds in self.basicCmds:
+            sizer = wx.BoxSizer(wx.HORIZONTAL)            
+            button = wx.Button(self.frame, ID_ANY, cmds["cmd"])
+            button.requiresTxtInput = []            
+            #button.SetToolTip("sdfsdfsd")
+            #button.SetHelpText("rgergerg")
             button.SetMinSize((128,-1))
-            sizer_innerFrame.Add(button, 0, wx.EXPAND)
-            for i in range(0, btns["numberOfInputValues"]):                  
-                control = wx.TextCtrl(frame, size=(20, -1))
-                control.SetMaxLength(2)
-                sizer_innerFrame.Add(control, 0, wx.EXPAND)            
-            sizer_outerFrame.Add(sizer_innerFrame, 0, wx.EXPAND)            
-        return sizer_outerFrame       
+            sizer.Add(button, 0, wx.EXPAND)
+            self.menuItems.append([])
+            self.menuItems[-1].append(button)
+            for x in range(0, cmds["numberOfInputValues"]):                                
+                control = wx.TextCtrl(self.frame, size=(20, -1))
+                control.SetMaxLength(2)                
+                sizer.Add(control, 0, wx.EXPAND) 
+                #self.menuItems[-1].append(control)
+                button.requiresTxtInput.append(control)                           
+            self.sizer.Add(sizer, 0, wx.EXPAND)            
+             
         
-
-#b =  GUI_BasicCmdBtn()    
-#print(b.basicBtns)
 
