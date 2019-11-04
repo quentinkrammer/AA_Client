@@ -3,11 +3,11 @@
 import wx
 import os
 from GUI_BasicCmdBtn import GUI_BasicCmdBtn
+from GUI_SendCmdList import GUI_SendCmdList
 
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
         self.dirname=''
-
         # A "-1" in the size parameter instructs wxWidgets to use the default size.
         # In this case, we select 200px width and the default height.
         wx.Frame.__init__(self, parent, title=title, size=(200,-1))
@@ -25,24 +25,30 @@ class MainWindow(wx.Frame):
         menuBar.Append(filemenu,"&File") # Adding the "filemenu" to the MenuBar
         self.SetMenuBar(menuBar)  # Adding the MenuBar to the Frame content.
         
-        menu = GUI_BasicCmdBtn(self) 
+        cmdMenu = GUI_BasicCmdBtn(self)
+        self.cmdList = GUI_SendCmdList(self)
        
         # Events.
         self.Bind(wx.EVT_MENU, self.OnOpen, menuOpen)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
-        for btns in menu.menuItems:
+        for btns in cmdMenu.menuItems:
             self.Bind(wx.EVT_BUTTON, self.onBasicCmdBtns, btns[0])         
 
         # Use some sizers to see layout options
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.sizer.Add(menu.sizer, 0, wx.EXPAND)
-        self.sizer.Add(self.communicationLog, 1, wx.EXPAND)        
+        self.sizer.Add(cmdMenu.sizer, 0, wx.EXPAND)
+        self.sizer.Add(self.cmdList, 0, wx.EXPAND)
+        
+        self.outerSizer = wx.BoxSizer(wx.VERTICAL)
+        self.outerSizer.Add(self.sizer, 0, wx.EXPAND)
+        self.outerSizer.Add(self.communicationLog, 0, wx.EXPAND)
+        
 
         #Layout sizers
-        self.SetSizer(self.sizer)
+        self.SetSizer(self.outerSizer)
         self.SetAutoLayout(1)
-        self.sizer.Fit(self)
+        self.outerSizer.Fit(self)
         self.Show()
         
     def onBasicCmdBtns(self,e):
@@ -50,7 +56,7 @@ class MainWindow(wx.Frame):
         cmd = btn.GetLabel()
         for txtInput in btn.requiresTxtInput:
             cmd = cmd  + " " + txtInput.GetValue()
-        print(cmd)
+        self.cmdList.addEntry(cmd)        
         
 
     def OnAbout(self,e):
