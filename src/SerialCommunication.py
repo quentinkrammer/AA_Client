@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 24 13:12:44 2019
-@author: ip15oheg
-"""
+
 import serial
 
 class SerialCommunication:    

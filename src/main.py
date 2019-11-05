@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
 
 import wx
-import SerialCommunication
+import os
+from PanelCommunicationButtons import PanelCommunicationButtons
+from PanelCommunicationList import PanelCommunicationList
+from PanelReceive import PanelReceive
+from MainWindow import MainWindow
 
-#Create an application object.
-app = wx.App()
-   
-# Then a frame.
-frm = wx.Frame(None, title="Hello World")
-   
-# Show it.
-frm.Show()
-   
-# Start the event loop.
+app = wx.App(False)
+frame = MainWindow()
+panelButtons = PanelCommunicationButtons(frame)
+panelList = PanelCommunicationList(frame)
+receive = PanelReceive(frame)
+ 
+sizer = wx.BoxSizer(wx.HORIZONTAL)
+sizer.Add(panelButtons)
+sizer.Add(panelList, 1, wx.EXPAND)
+sizer.Add(receive, 1, wx.EXPAND)
+
+frame.SetSizerAndFit(sizer)
 app.MainLoop()
-
-ser = SerialCommunication.SerialCommunication()
-replies = ser.parseCmd("SHUTDOWN")
-for reply in replies:
-    print("Success: " +reply)
-if len(replies) == 0:
-    print("ZERO REPLIES!")
