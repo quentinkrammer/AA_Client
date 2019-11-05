@@ -15,8 +15,7 @@ class PanelCommunicationButtons(wx.Panel):
         self.btn6 = wx.Button(self, -1, "SYS:DIST")
         self.btn7 = wx.Button(self, -1, "SYS:ANG")
         self.btn8 = wx.Button(self, -1, "SYS:ON")
-        self.btn9 = wx.Button(self, -1, "SYS:OFF")      
-        
+        self.btn9 = wx.Button(self, -1, "SYS:OFF")              
         
         self.txt01 = wx.TextCtrl(self, size=(20, -1))
         self.txt11 = wx.TextCtrl(self, size=(20, -1))
@@ -38,13 +37,13 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt61.SetMaxLength(2)
         self.txt71.SetMaxLength(2)
         
-        self.btn0.requiredInput = [self.txt01]
+        self.btn0.requiredInput = [self.txt01]        
         self.btn1.requiredInput = [self.txt11]
         self.btn2.requiredInput = [self.txt21]
         self.btn3.requiredInput = [self.txt31, self.txt32]
         self.btn4.requiredInput = [self.txt41, self.txt42]
-        self.btn0.requiredInput = [self.txt61]
-        self.btn0.requiredInput = [self.txt71]      
+        self.btn6.requiredInput = [self.txt61]
+        self.btn7.requiredInput = [self.txt71]      
 
         self.grid = wx.GridBagSizer(hgap=9, vgap=2)
         
@@ -59,6 +58,7 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.btn8, (8,0))
         self.grid.Add(self.btn9, (9,0))
         
+        
         self.grid.Add(self.txt01, (0,1))
         self.grid.Add(self.txt11, (1,1))
         self.grid.Add(self.txt21, (2,1))
@@ -70,7 +70,25 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.txt71, (7,1))
         
         self.SetSizerAndFit(self.grid)
-        print("Size of PanelCommunicationButtons: " + str(self.GetSize()))
+        
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn0)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn1)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn2)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn3)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn4)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn5)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn6)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn7)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn8)
+        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn9)
+        
+    def onBtn(self,e):
+        btn = e.GetEventObject()        
+        cmd = btn.GetLabel()        
+        if hasattr(btn, 'requiredInput'):#                   
+            for values in btn.requiredInput:
+                                  cmd = cmd  + " " + values.GetValue()       
+        print(cmd)
         
 # app = wx.App(False)
 # frame = wx.Frame(None)

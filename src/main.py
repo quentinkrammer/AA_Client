@@ -20,3 +20,4 @@ sizer.Add(receive, 1, wx.EXPAND)
 
 frame.SetSizerAndFit(sizer)
 app.MainLoop()
+
