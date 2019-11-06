@@ -9,7 +9,7 @@ class SerialCommunication:
         self.ser.baudrate = baudrate
         self.ser.port = port
         self.ser.timeout = 1
-        self.ser.open()
+        #self.ser.open()
  
     def readNextMsg(self):
         msg = ""
@@ -24,6 +24,7 @@ class SerialCommunication:
         return msg
     
     def parseCmd(self, cmd):
+        self.ser.open()
         replies = []
         try:            
             cmd += "\n"
@@ -32,7 +33,7 @@ class SerialCommunication:
                 msg = self.readNextMsg()                
                 if not msg:
                     break
-                replies.append(msg)
+                replies.append(msg+"\n")
 #                             
         except Exception as e:
             print(e)

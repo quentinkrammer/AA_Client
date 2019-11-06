@@ -57,3 +57,4 @@ frame.Bind(wx.EVT_BUTTON, onSend, panelList.sendBtn)
 frame.SetSizerAndFit(sizer)
 app.MainLoop()
 
+ser.ser.close() 
