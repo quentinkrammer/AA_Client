@@ -9,48 +9,32 @@ class PanelCommunicationList(wx.Panel):
     def __init__( self, parent):        #, sizeC=(200,50)
         wx.Panel.__init__(self, parent=parent) #, size(-1, sizeY)
         label = wx.StaticText(self, -1, label="Communication window")
-        sendBtn =  wx.Button(self, label="Send") 
+        self.sendBtn =  wx.Button(self, label="Send")
+        self.listElements = [] 
                 
         self.list = wx.lib.scrolledpanel.ScrolledPanel(self,-1, size=(-1 ,278), pos=(0,0), style=wx.SIMPLE_BORDER)
         self.list.SetupScrolling()
-        self.listSizer = wx.BoxSizer(wx.VERTICAL)
-        
-        
-        listEle1 = wx.Button(self.list, label="abcsabcsdrwerwerwabcsdrwerwerwdrwerwerw")
-        listEle2 = wx.Button(self.list)
-        listEle3 = wx.Button(self.list)
-        listEle4 = wx.Button(self.list)
-        listEle5 = wx.Button(self.list)
-        listEle6 = wx.Button(self.list)
-        listEle7 = wx.Button(self.list)
-        listEle8 = wx.Button(self.list)
-        listEle9 = wx.Button(self.list)
-        listEle10 = wx.Button(self.list)
-        listEle11 = wx.Button(self.list)
-        listEle12 = wx.Button(self.list)
-        listEle13 = wx.Button(self.list)
-        
-        self.listSizer.Add(listEle1, 0, wx.EXPAND) 
-        self.listSizer.Add(listEle2, 0, wx.EXPAND)
-        self.listSizer.Add(listEle3, 0, wx.EXPAND)
-        self.listSizer.Add(listEle4, 0, wx.EXPAND)
-        self.listSizer.Add(listEle5, 0, wx.EXPAND)
-        self.listSizer.Add(listEle6, 0, wx.EXPAND)
-        self.listSizer.Add(listEle7, 0, wx.EXPAND)
-        self.listSizer.Add(listEle8, 0, wx.EXPAND)
-        self.listSizer.Add(listEle9, 0, wx.EXPAND)
-        self.listSizer.Add(listEle10, 0, wx.EXPAND)
-        self.listSizer.Add(listEle11, 0, wx.EXPAND)
-        self.listSizer.Add(listEle12, 0, wx.EXPAND)
-        self.listSizer.Add(listEle13, 0, wx.EXPAND)
+        self.listSizer = wx.BoxSizer(wx.VERTICAL)        
+
         self.list.SetSizer(self.listSizer)          
 
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(label,0, wx.ALIGN_CENTER)
-        sizer.Add(self.list, 1, wx.EXPAND)
-        sizer.Add(sendBtn, 0, wx.EXPAND)                
-        self.SetSizerAndFit(sizer)
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.sizer.Add(label,0, wx.ALIGN_CENTER)
+        self.sizer.Add(self.list, 1, wx.EXPAND)
+        self.sizer.Add(self.sendBtn, 0, wx.EXPAND)                
+        self.SetSizerAndFit(self.sizer)
         #print("Size of PanelCommunicationButtons: " + str(self.GetSize()))
+        
+    def addToList(self, cmd):
+        newEle = wx.Button(self.list, label=cmd)
+        self.listElements.append(newEle)
+        self.listSizer.Add(newEle, 0, wx.EXPAND)        
+        self.list.Bind(wx.EVT_BUTTON, self.removeFromList, newEle)
+        self.sizer.RecalcSizes() 
+        
+    def removeFromList(self, e):
+        e.GetEventObject().Destroy()
+        self.sizer.RecalcSizes() 
         
 # app = wx.App(False)
 # frame = MainWindow()

@@ -6,11 +6,11 @@ class PanelReceive(wx.Panel):
     def __init__( self, parent):        #, sizeC=(200,50)
         wx.Panel.__init__(self, parent=parent) #, size(-1, sizeY)
         label = wx.StaticText(self, -1, label="AA response: ")
-        text = wx.TextCtrl(self, size=(259,-1) , style=wx.TE_MULTILINE|wx.TE_READONLY)        
+        self.text = wx.TextCtrl(self, size=(259,-1) , style=wx.TE_MULTILINE|wx.TE_READONLY)        
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(label,0, wx.ALIGN_CENTER)
-        sizer.Add(text, 1, wx.EXPAND)
+        sizer.Add(self.text, 1, wx.EXPAND)
                       
         self.SetSizerAndFit(sizer)
 

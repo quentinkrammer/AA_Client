@@ -6,7 +6,7 @@ class PanelCommunicationButtons(wx.Panel):
     def __init__( self, parent ):
         wx.Panel.__init__(self, parent=parent)        
         
-        self.btn0 = wx.Button(self, -1, "SILENT")
+        self.btn0 = wx.Button(self, -1, "SHUTDOWN")
         self.btn1 = wx.Button(self, -1, "ANT:ACT")
         self.btn2 = wx.Button(self, -1, "ANT:DEACT")
         self.btn3 = wx.Button(self, -1, "ANT:SWITCH")
@@ -71,24 +71,24 @@ class PanelCommunicationButtons(wx.Panel):
         
         self.SetSizerAndFit(self.grid)
         
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn0)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn1)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn2)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn3)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn4)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn5)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn6)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn7)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn8)
-        self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn9)
-        
-    def onBtn(self,e):
-        btn = e.GetEventObject()        
-        cmd = btn.GetLabel()        
-        if hasattr(btn, 'requiredInput'):#                   
-            for values in btn.requiredInput:
-                                  cmd = cmd  + " " + values.GetValue()       
-        print(cmd)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn0)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn1)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn2)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn3)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn4)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn5)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn6)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn7)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn8)
+#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn9)
+#         
+#     def onBtn(self,e):
+#         btn = e.GetEventObject()        
+#         cmd = btn.GetLabel()        
+#         if hasattr(btn, 'requiredInput'):#                   
+#             for values in btn.requiredInput:
+#                                   cmd = cmd  + " " + values.GetValue()       
+#         print(cmd)
         
 # app = wx.App(False)
 # frame = wx.Frame(None)
