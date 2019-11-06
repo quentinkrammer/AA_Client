@@ -34,8 +34,8 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt32.SetMaxLength(2)
         self.txt41.SetMaxLength(2)
         self.txt42.SetMaxLength(2)
-        self.txt61.SetMaxLength(2)
-        self.txt71.SetMaxLength(2)
+        self.txt61.SetMaxLength(10)
+        self.txt71.SetMaxLength(10)
         
         self.btn0.requiredInput = [self.txt01]        
         self.btn1.requiredInput = [self.txt11]

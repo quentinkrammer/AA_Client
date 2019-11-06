@@ -11,14 +11,17 @@ from MainWindow import MainWindow
 def onBtn(e):
     btn = e.GetEventObject()        
     cmd = btn.GetLabel()        
-    if hasattr(btn, 'requiredInput'):#                   
+    if hasattr(btn, 'requiredInput'):                   
         for values in btn.requiredInput:
-                              cmd = cmd  + " " + values.GetValue()       
+            value = values.GetValue()
+            if value == '':
+                wx.MessageBox("Values missing!")
+                return;                                           
+            cmd = cmd  + " " + values.GetValue()                   
     panelList.addToList(cmd)
     
 def onSend(e):
-    for listeEle in panelList.list.GetChildren():
-        #print(listeEle.GetLabel())
+    for listeEle in panelList.list.GetChildren():        
         replies = ser.parseCmd(listeEle.GetLabel())        
         for reply in replies:
             receive.text.AppendText(reply)
@@ -56,5 +59,3 @@ frame.Bind(wx.EVT_BUTTON, onSend, panelList.sendBtn)
 
 frame.SetSizerAndFit(sizer)
 app.MainLoop()
-
-ser.ser.close() 
