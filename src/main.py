@@ -7,6 +7,7 @@ import re
 from SerialCommunication import SerialCommunication
 from PanelCommunicationButtons import PanelCommunicationButtons
 from PanelCommunicationList import PanelCommunicationList
+from PanelAntennaStatus import PanelAntennaStatus
 from PanelReceive import PanelReceive
 from MainWindow import MainWindow
 
@@ -48,11 +49,16 @@ frame = MainWindow()
 panelButtons = PanelCommunicationButtons(frame)
 panelList = PanelCommunicationList(frame)
 receive = PanelReceive(frame)
+panelStatus = PanelAntennaStatus(frame)
  
 sizer = wx.BoxSizer(wx.HORIZONTAL)
 sizer.Add(panelButtons)
 sizer.Add(panelList, 1, wx.EXPAND)
 sizer.Add(receive, 1, wx.EXPAND)
+
+sizer2 = wx.BoxSizer(wx.VERTICAL)
+sizer2.Add(sizer, 1, wx.EXPAND)
+sizer2.Add(panelStatus, 0, wx.EXPAND)
 
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn0)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn1)
@@ -64,8 +70,7 @@ frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn6)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn7)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn8)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn9)
-
 frame.Bind(wx.EVT_BUTTON, onSend, panelList.sendBtn)
 
-frame.SetSizerAndFit(sizer)
+frame.SetSizerAndFit(sizer2)
 app.MainLoop()
