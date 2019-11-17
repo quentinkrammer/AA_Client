@@ -15,7 +15,8 @@ class PanelCommunicationButtons(wx.Panel):
         self.btn6 = wx.Button(self, -1, "SYS:DIST")
         self.btn7 = wx.Button(self, -1, "SYS:ANG")
         self.btn8 = wx.Button(self, -1, "SYS:ON")
-        self.btn9 = wx.Button(self, -1, "SYS:OFF")              
+        self.btn9 = wx.Button(self, -1, "SYS:OFF")
+        self.btn10 = wx.Button(self, -1, "SEQUENZ")              
         
         self.txt01 = wx.TextCtrl(self, size=(20, -1))
         self.txt11 = wx.TextCtrl(self, size=(20, -1))
@@ -26,6 +27,10 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt42 = wx.TextCtrl(self, size=(20, -1))
         self.txt61 = wx.TextCtrl(self, size=(20, -1))
         self.txt71 = wx.TextCtrl(self, size=(20, -1))
+        self.txt10_1 = wx.TextCtrl(self, size=(20, -1))
+        self.txt10_2 = wx.TextCtrl(self, size=(20, -1))
+        self.txt10_3 = wx.TextCtrl(self, size=(20, -1))
+        self.txt10_4 = wx.TextCtrl(self, size=(20, -1))
         
         self.txt01.SetMaxLength(4)
         self.txt11.SetMaxLength(2)
@@ -36,6 +41,10 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt42.SetMaxLength(2)
         self.txt61.SetMaxLength(10)
         self.txt71.SetMaxLength(10)
+        self.txt10_1.SetMaxLength(2)
+        self.txt10_2.SetMaxLength(2)
+        self.txt10_3.SetMaxLength(2)
+        self.txt10_4.SetMaxLength(2)
         
         self.btn0.requiredInput = [self.txt01]        
         self.btn1.requiredInput = [self.txt11]
@@ -43,9 +52,10 @@ class PanelCommunicationButtons(wx.Panel):
         self.btn3.requiredInput = [self.txt31, self.txt32]
         self.btn4.requiredInput = [self.txt41, self.txt42]
         self.btn6.requiredInput = [self.txt61]
-        self.btn7.requiredInput = [self.txt71]      
+        self.btn7.requiredInput = [self.txt71]
+        self.btn10.requiredInput = [self.txt10_1, self.txt10_2, self.txt10_3, self.txt10_4]       
 
-        self.grid = wx.GridBagSizer(hgap=9, vgap=2)
+        self.grid = wx.GridBagSizer(hgap=10, vgap=4)
         
         self.grid.Add(self.btn0, (0,0))                      
         self.grid.Add(self.btn1, (1,0))
@@ -57,6 +67,7 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.btn7, (7,0))
         self.grid.Add(self.btn8, (8,0))
         self.grid.Add(self.btn9, (9,0))
+        self.grid.Add(self.btn10, (10,0))
         
         
         self.grid.Add(self.txt01, (0,1))
@@ -68,6 +79,10 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.txt42, (4,2))
         self.grid.Add(self.txt61, (6,1))
         self.grid.Add(self.txt71, (7,1))
+        self.grid.Add(self.txt10_1, (10,1))
+        self.grid.Add(self.txt10_2, (10,2))
+        self.grid.Add(self.txt10_3, (10,3))
+        self.grid.Add(self.txt10_4, (10,4))
         
         self.SetSizerAndFit(self.grid)
         

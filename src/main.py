@@ -40,7 +40,42 @@ def handleIdleBtn(label):
     seconds = int(digits[0])
     receive.text.AppendText("Idle for "+str(seconds)+" seconds.\n")
     time.sleep(seconds)
-        
+    
+def onSequenz(e):
+    activate = "ANT:ACT "
+    deactivate = "ANT:DEACT "
+    idle = "IDLE "
+    btn = e.GetEventObject()
+    if btn.requiredInput[0].GetValue() == '':
+        min = 1
+    else:
+        min = int(btn.requiredInput[0].GetValue())
+    if btn.requiredInput[1].GetValue() == '':
+        max = 91
+    else:
+        max = int(btn.requiredInput[1].GetValue()) + 1
+    if btn.requiredInput[2].GetValue() == '':
+        stepSize = 1
+    else:
+        stepSize = int(btn.requiredInput[2].GetValue())
+    if btn.requiredInput[3].GetValue() == '':
+        idleTime = 0
+    else:
+        idleTime = int(btn.requiredInput[3].GetValue())
+    
+    panelList.addToList(activate+str(min))    
+    if idleTime == 0:        
+        for i in range(min, max, stepSize):
+            if i+stepSize < max:        
+                panelList.addToList(deactivate+str(i))                          
+                panelList.addToList(activate+str(i+stepSize))            
+    else:        
+        for i in range(min, max, stepSize):
+            if i+stepSize < max:  
+                panelList.addToList(idle+str(idleTime))
+                panelList.addToList(deactivate+str(i))                           
+                panelList.addToList(activate+str(i+stepSize))        
+            
    
 ser = SerialCommunication()
 
@@ -70,6 +105,7 @@ frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn6)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn7)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn8)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn9)
+frame.Bind(wx.EVT_BUTTON, onSequenz, panelButtons.btn10)
 frame.Bind(wx.EVT_BUTTON, onSend, panelList.sendBtn)
 
 frame.SetSizerAndFit(sizer2)

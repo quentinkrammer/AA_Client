@@ -12,7 +12,7 @@ class PanelCommunicationList(wx.Panel):
         self.sendBtn =  wx.Button(self, label="Send")
         self.listElements = [] 
                 
-        self.list = wx.lib.scrolledpanel.ScrolledPanel(self,-1, size=(-1 ,278), pos=(0,0), style=wx.SIMPLE_BORDER)
+        self.list = wx.lib.scrolledpanel.ScrolledPanel(self,-1, size=(-1 ,100), pos=(0,0), style=wx.SIMPLE_BORDER)
         self.list.SetupScrolling()
         self.listSizer = wx.BoxSizer(wx.VERTICAL)        
 
