@@ -6,7 +6,7 @@ class PanelCommunicationButtons(wx.Panel):
     def __init__( self, parent ):
         wx.Panel.__init__(self, parent=parent)        
         
-        self.btn0 = wx.Button(self, -1, "SHUTDOWN")
+        self.btn0 = wx.Button(self, -1, "IDLE")
         self.btn1 = wx.Button(self, -1, "ANT:ACT")
         self.btn2 = wx.Button(self, -1, "ANT:DEACT")
         self.btn3 = wx.Button(self, -1, "ANT:SWITCH")
@@ -27,7 +27,7 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt61 = wx.TextCtrl(self, size=(20, -1))
         self.txt71 = wx.TextCtrl(self, size=(20, -1))
         
-        self.txt01.SetMaxLength(2)
+        self.txt01.SetMaxLength(4)
         self.txt11.SetMaxLength(2)
         self.txt21.SetMaxLength(2)
         self.txt31.SetMaxLength(2)

@@ -2,6 +2,8 @@
 
 import wx
 import os
+import time
+import re
 from SerialCommunication import SerialCommunication
 from PanelCommunicationButtons import PanelCommunicationButtons
 from PanelCommunicationList import PanelCommunicationList
@@ -21,15 +23,23 @@ def onBtn(e):
     panelList.addToList(cmd)
     
 def onSend(e):
-    for listeEle in panelList.list.GetChildren():        
-        replies = ser.parseCmd(listeEle.GetLabel())        
-        for reply in replies:
-            receive.text.AppendText(reply)
-        if len(replies) == 0:
-            receive.text.AppendText("ZERO REPLIES!\n") 
+    for listeEle in panelList.list.GetChildren():
+        cmd = listeEle.GetLabel()
+        if not "IDLE" in cmd: 
+            replies = ser.parseCmd(listeEle.GetLabel())        
+            for reply in replies:
+                receive.text.AppendText(reply)
+            if len(replies) == 0:
+                receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
+        else: 
+            handleIdleBtn(listeEle.GetLabel())
+            
+def handleIdleBtn(label):
+    digits = re.findall(r'\d+', label)
+    seconds = int(digits[0])
+    receive.text.AppendText("Idle for "+str(seconds)+" seconds.\n")
+    time.sleep(seconds)
         
-def postOnReceivePanel(txt):
-    receive.text.AppendText(txt)    
    
 ser = SerialCommunication()
 
