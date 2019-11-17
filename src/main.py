@@ -34,6 +34,11 @@ def onSend(e):
                 receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
         else: 
             handleIdleBtn(listeEle.GetLabel())
+        #f True:
+        #   listeEle.Destroy()
+        #   sizer2.RecalcSizes()
+    #panelList.clearList2()
+            
             
 def handleIdleBtn(label):
     digits = re.findall(r'\d+', label)
