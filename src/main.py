@@ -37,7 +37,7 @@ def onSend(e):
         #f True:
         #   listeEle.Destroy()
         #   sizer2.RecalcSizes()
-    #panelList.clearList2()
+    panelList.clearList2()
             
             
 def handleIdleBtn(label):
