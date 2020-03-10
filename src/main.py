@@ -4,6 +4,8 @@ import wx
 import os
 import time
 import re
+import threading
+import socket
 from SerialCommunication import SerialCommunication
 from PanelCommunicationButtons import PanelCommunicationButtons
 from PanelCommunicationList import PanelCommunicationList
@@ -23,7 +25,7 @@ def onBtn(e):
             cmd = cmd  + " " + values.GetValue()                   
     panelList.addToList(cmd)
     
-def onSend(e):
+def onSendThread():
     for listeEle in panelList.list.GetChildren():
         cmd = listeEle.GetLabel()
         if not "IDLE" in cmd: 
@@ -38,6 +40,31 @@ def onSend(e):
         #   listeEle.Destroy()
         #   sizer2.RecalcSizes()
     panelList.clearList2()
+    
+def onSend(e):
+#     thread = threading.Thread(target=onSendThread, args=(), daemon=True)
+#     thread.start()
+    for listeEle in panelList.list.GetChildren():
+        cmd = listeEle.GetLabel()
+        if not "IDLE" in cmd:
+            replies = ser.parseCmd(cmd)
+            #replies = ser.parseCmd(listeEle.GetLabel()) 
+            ######Central Data Collection ######### 
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((HOST, PORT))
+                s.sendall( (cmd).encode() ) 
+            ######Central Data Collection #########       
+            for reply in replies:
+                receive.text.AppendText(reply)
+            if len(replies) == 0:
+                receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
+        else: 
+            handleIdleBtn(listeEle.GetLabel())
+        #f True:
+        #   listeEle.Destroy()
+        #   sizer2.RecalcSizes()
+    panelList.clearList2()
+    
             
             
 def handleIdleBtn(label):
@@ -79,8 +106,13 @@ def onSequenz(e):
             if i+stepSize < max:  
                 panelList.addToList(idle+str(idleTime))
                 panelList.addToList(deactivate+str(i))                           
-                panelList.addToList(activate+str(i+stepSize))        
+                panelList.addToList(activate+str(i+stepSize)) 
+                
+ 
             
+
+HOST = '127.0.0.1'  
+PORT = 12121       
    
 ser = SerialCommunication()
 
