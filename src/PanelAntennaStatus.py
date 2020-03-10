@@ -9,27 +9,32 @@ class PanelAntennaStatus(wx.Panel):
         self.outerSizer = wx.BoxSizer(wx.VERTICAL)
         self.innerSizer1 = wx.BoxSizer(wx.HORIZONTAL)
         self.innerSizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        self.innerSizer3 = wx.BoxSizer(wx.HORIZONTAL)        
-        self.antennasIcon = []
+        self.innerSizer3 = wx.BoxSizer(wx.HORIZONTAL)
+        self.innerSizer4 = wx.BoxSizer(wx.HORIZONTAL)        
+        self.antennaButtons = []
         self.antennasStatus = []
         
-        for i in range(1,31):
+        for i in range(0,30):
             self.createAntennaStatusAndIcon(i)
-            self.innerSizer1.Add(self.antennasIcon[-1], 1, wx.EXPAND)
-        for i in range(31,61):
+            self.innerSizer1.Add(self.antennaButtons[-1], 1, wx.EXPAND)
+        for i in range(30,60):
             self.createAntennaStatusAndIcon(i)
-            self.innerSizer2.Add(self.antennasIcon[-1], 1, wx.EXPAND)
-        for i in range(61,91):
+            self.innerSizer2.Add(self.antennaButtons[-1], 1, wx.EXPAND)
+        for i in range(60,90):
             self.createAntennaStatusAndIcon(i)
-            self.innerSizer3.Add(self.antennasIcon[-1], 1, wx.EXPAND)
+            self.innerSizer3.Add(self.antennaButtons[-1], 1, wx.EXPAND)
+        for i in range(90,96):
+            self.createAntennaStatusAndIcon(i)
+            self.innerSizer4.Add(self.antennaButtons[-1], 1, wx.EXPAND)
             
         self.outerSizer.Add(self.innerSizer1, 0, wx.EXPAND) 
         self.outerSizer.Add(self.innerSizer2, 0, wx.EXPAND)
-        self.outerSizer.Add(self.innerSizer3, 0, wx.EXPAND)  
+        self.outerSizer.Add(self.innerSizer3, 0, wx.EXPAND)
+        self.outerSizer.Add(self.innerSizer4, 0, wx.EXPAND)    
         self.SetSizerAndFit(self.outerSizer) 
             
     def createAntennaStatusAndIcon(self, index):
-        self.antennasIcon.append(wx.StaticText(self, -1, label=str(index), \
+        self.antennaButtons.append(wx.Button(self, -1, label=str(index), \
                                            size=(18,20), \
                                            style=wx.ALIGN_CENTER | wx.BORDER_SIMPLE))
         self.antennasStatus.append(False)
@@ -38,32 +43,39 @@ class PanelAntennaStatus(wx.Panel):
         index = 0
         for status in self.antennasStatus:
             if status:
-                self.antennasIcon[index].SetBackgroundColour("green")                
+                self.antennaButtons[index].SetBackgroundColour("green")                
             else:
-                self.antennasIcon[index].SetBackgroundColour(wx.NullColour)
+                self.antennaButtons[index].SetBackgroundColour(wx.NullColour)
             index = index+1
             
                 
     def toggleAntenna(self,antNmbr):
-        i = antNmbr - 1
-        #antenna = self.antennasIcon[i]
+        i = int(antNmbr)
+        #antenna = self.antennaButtons[i]
         if self.antennasStatus[i]:
-            self.antennasStatus[i] = False            
+            cmd =self.getCmd(antNmbr)
+            self.antennasStatus[i] = False
         else:
+            cmd = self.getCmd(antNmbr)
             self.antennasStatus[i] = True
         self.refreshAntennas()
-            
-        
-
-         
+        return cmd
+    
+    def getCmd(self,antNmbr):
+        i = int(antNmbr)
+        if self.antennasStatus[i]:
+            cmd = "ANT:DEACT "+antNmbr            
+        else:
+            cmd = "ANT:ACT "+antNmbr 
+        return cmd           
             
             
 # app = wx.App(False)
 # frame = wx.Frame(None)
 # panel = PanelAntennaStatus(frame)
 # panel.toggleAntenna(66)
-# panel.toggleAntenna(66)
-# #panel.refreshAntennas()
+# #panel.toggleAntenna(66)
+# panel.refreshAntennas()
 # 
 # frame.Show()
-#app.MainLoop()
+# app.MainLoop()

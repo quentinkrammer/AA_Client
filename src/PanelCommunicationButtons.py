@@ -16,7 +16,15 @@ class PanelCommunicationButtons(wx.Panel):
         self.btn7 = wx.Button(self, -1, "SYS:ANG")
         self.btn8 = wx.Button(self, -1, "SYS:ON")
         self.btn9 = wx.Button(self, -1, "SYS:OFF")
-        self.btn10 = wx.Button(self, -1, "SEQUENZ")              
+        self.btn10 = wx.Button(self, -1, "SEQUENZ")
+        
+        self.btn3.Disable()
+        self.btn4.Disable() 
+        self.btn5.Disable() 
+        self.btn6.Disable() 
+        self.btn7.Disable() 
+        self.btn8.Disable() 
+        self.btn9.Disable()              
         
         self.txt01 = wx.TextCtrl(self, size=(20, -1))
         self.txt11 = wx.TextCtrl(self, size=(20, -1))
@@ -86,27 +94,3 @@ class PanelCommunicationButtons(wx.Panel):
         
         self.SetSizerAndFit(self.grid)
         
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn0)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn1)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn2)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn3)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn4)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn5)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn6)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn7)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn8)
-#         self.Bind(wx.EVT_BUTTON, self.onBtn, self.btn9)
-#         
-#     def onBtn(self,e):
-#         btn = e.GetEventObject()        
-#         cmd = btn.GetLabel()        
-#         if hasattr(btn, 'requiredInput'):#                   
-#             for values in btn.requiredInput:
-#                                   cmd = cmd  + " " + values.GetValue()       
-#         print(cmd)
-        
-# app = wx.App(False)
-# frame = wx.Frame(None)
-# panel = PanelCommunicationButtons(frame)
-# frame.Show()
-# app.MainLoop()

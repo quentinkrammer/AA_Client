@@ -25,21 +25,39 @@ def onBtn(e):
             cmd = cmd  + " " + values.GetValue()                   
     panelList.addToList(cmd)
     
-def onSendThread():
-    for listeEle in panelList.list.GetChildren():
-        cmd = listeEle.GetLabel()
-        if not "IDLE" in cmd: 
-            replies = ser.parseCmd(listeEle.GetLabel())        
-            for reply in replies:
-                receive.text.AppendText(reply)
-            if len(replies) == 0:
-                receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
-        else: 
-            handleIdleBtn(listeEle.GetLabel())
-        #f True:
-        #   listeEle.Destroy()
-        #   sizer2.RecalcSizes()
+# def onSendThread():
+#     for listeEle in panelList.list.GetChildren():
+#         cmd = listeEle.GetLabel()
+#         if not "IDLE" in cmd: 
+#             replies = ser.parseCmd(listeEle.GetLabel())        
+#             for reply in replies:
+#                 receive.text.AppendText(reply)
+#             if len(replies) == 0:
+#                 receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
+#         else: 
+#             handleIdleBtn(listeEle.GetLabel())
+#         #f True:
+#         #   listeEle.Destroy()
+#         #   sizer2.RecalcSizes()
+#     panelList.clearList2()
+
+def onQuickBtn(e):
+    nmbr = e.GetEventObject().GetLabel()
+    cmd = panelStatus.getCmd(nmbr)
     panelList.clearList2()
+    panelList.addToList(cmd)
+    onSend(e)
+    #print(cmd)
+#     btn = e.GetEventObject()        
+#     cmd = btn.GetLabel()        
+#     if hasattr(btn, 'requiredInput'):                   
+#         for values in btn.requiredInput:
+#             value = values.GetValue()
+#             if value == '':
+#                 wx.MessageBox("Values missing!")
+#                 return;                                           
+#             cmd = cmd  + " " + values.GetValue()                   
+#     panelList.addToList(cmd)
     
 def onSend(e):
 #     thread = threading.Thread(target=onSendThread, args=(), daemon=True)
@@ -53,7 +71,9 @@ def onSend(e):
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.sendall( (cmd).encode() ) 
-            ######Central Data Collection #########       
+            ######Central Data Collection #########  
+            nmbr = re.search(r'\d+', cmd).group() 
+            c = panelStatus.toggleAntenna(nmbr)
             for reply in replies:
                 receive.text.AppendText(reply)
             if len(replies) == 0:
@@ -144,6 +164,8 @@ frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn8)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn9)
 frame.Bind(wx.EVT_BUTTON, onSequenz, panelButtons.btn10)
 frame.Bind(wx.EVT_BUTTON, onSend, panelList.sendBtn)
+for i in range(0,96):
+    frame.Bind(wx.EVT_BUTTON, onQuickBtn, panelStatus.antennaButtons[i])
 
 frame.SetSizerAndFit(sizer2)
 app.MainLoop()
