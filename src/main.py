@@ -60,6 +60,7 @@ def handleIdleBtn(label):
     time.sleep(seconds)
 
 def onCombine(e):
+    #new shit
     btn = e.GetEventObject()
     nmbr = int(btn.requiredInput[0].GetValue())
     idle = btn.requiredInput[1].GetValue()

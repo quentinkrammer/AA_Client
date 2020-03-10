@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
-
+#added ne shit
 class PanelCommunicationButtons(wx.Panel):
     def __init__( self, parent ):
         wx.Panel.__init__(self, parent=parent)        
@@ -101,4 +101,3 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.txt11_2, (11,2))
         
         self.SetSizerAndFit(self.grid)
-        

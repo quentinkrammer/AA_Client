@@ -28,7 +28,7 @@ class PanelCommunicationList(wx.Panel):
         self.sizer.Add(self.list, 1, wx.EXPAND)
         self.sizer.Add(btnSizer, 0, wx.EXPAND)                
         self.SetSizerAndFit(self.sizer)
-        #print("Size of PanelCommunicationButtons: " + str(self.GetSize()))
+
         
     def addToList(self, cmd):
         newEle = wx.Button(self.list, label=cmd)

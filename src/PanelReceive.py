@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
-
+# new shit
 class PanelReceive(wx.Panel):
     def __init__( self, parent):        #, sizeC=(200,50)
         wx.Panel.__init__(self, parent=parent) #, size(-1, sizeY)

@@ -51,7 +51,6 @@ class PanelAntennaStatus(wx.Panel):
                 
     def toggleAntenna(self,antNmbr):
         i = int(antNmbr)
-        #antenna = self.antennaButtons[i]
         if self.antennasStatus[i]:
             cmd =self.getCmd(antNmbr)
             self.antennasStatus[i] = False

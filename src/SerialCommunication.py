@@ -30,15 +30,4 @@ class SerialCommunication:
             
         finally:                  
             return replies
-        
-#     def readNextMsg(self):
-#         msg = ""
-#         endOfMsg = False
-#         while(True):
-#             byte = self.ser.read()
-#             char = byte.decode()        
-#             if char == "\n" or not char:
-#                 break
-#             else:
-#                 msg += char                
-#         return msg
+
