@@ -24,22 +24,6 @@ def onBtn(e):
                 return;                                           
             cmd = cmd  + " " + values.GetValue()                   
     panelList.addToList(cmd)
-    
-# def onSendThread():
-#     for listeEle in panelList.list.GetChildren():
-#         cmd = listeEle.GetLabel()
-#         if not "IDLE" in cmd: 
-#             replies = ser.parseCmd(listeEle.GetLabel())        
-#             for reply in replies:
-#                 receive.text.AppendText(reply)
-#             if len(replies) == 0:
-#                 receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
-#         else: 
-#             handleIdleBtn(listeEle.GetLabel())
-#         #f True:
-#         #   listeEle.Destroy()
-#         #   sizer2.RecalcSizes()
-#     panelList.clearList2()
 
 def onQuickBtn(e):
     nmbr = e.GetEventObject().GetLabel()
@@ -47,26 +31,12 @@ def onQuickBtn(e):
     panelList.clearList2()
     panelList.addToList(cmd)
     onSend(e)
-    #print(cmd)
-#     btn = e.GetEventObject()        
-#     cmd = btn.GetLabel()        
-#     if hasattr(btn, 'requiredInput'):                   
-#         for values in btn.requiredInput:
-#             value = values.GetValue()
-#             if value == '':
-#                 wx.MessageBox("Values missing!")
-#                 return;                                           
-#             cmd = cmd  + " " + values.GetValue()                   
-#     panelList.addToList(cmd)
     
 def onSend(e):
-#     thread = threading.Thread(target=onSendThread, args=(), daemon=True)
-#     thread.start()
     for listeEle in panelList.list.GetChildren():
         cmd = listeEle.GetLabel()
         if not "IDLE" in cmd:
             replies = ser.parseCmd(cmd)
-            #replies = ser.parseCmd(listeEle.GetLabel()) 
             ######Central Data Collection ######### 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
@@ -80,18 +50,27 @@ def onSend(e):
                 receive.text.AppendText("AA is not responding.\nTry restarting this program to reset the serial connection.\n")
         else: 
             handleIdleBtn(listeEle.GetLabel())
-        #f True:
-        #   listeEle.Destroy()
-        #   sizer2.RecalcSizes()
+        frame.Update() 
     panelList.clearList2()
-    
-            
             
 def handleIdleBtn(label):
     digits = re.findall(r'\d+', label)
     seconds = int(digits[0])
     receive.text.AppendText("Idle for "+str(seconds)+" seconds.\n")
     time.sleep(seconds)
+
+def onCombine(e):
+    btn = e.GetEventObject()
+    nmbr = int(btn.requiredInput[0].GetValue())
+    idle = btn.requiredInput[1].GetValue()
+    for i in range(0,96):
+        if ( i != nmbr ):
+            panelList.addToList("ANT:ACT "+str(i))
+            if idle:
+                panelList.addToList("IDLE "+str(idle))
+            panelList.addToList("ANT:DEACT "+str(i)) 
+        i += 1
+    
     
 def onSequenz(e):
     activate = "ANT:ACT "
@@ -127,8 +106,6 @@ def onSequenz(e):
                 panelList.addToList(idle+str(idleTime))
                 panelList.addToList(deactivate+str(i))                           
                 panelList.addToList(activate+str(i+stepSize)) 
-                
- 
             
 
 HOST = '127.0.0.1'  
@@ -163,6 +140,7 @@ frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn7)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn8)
 frame.Bind(wx.EVT_BUTTON, onBtn, panelButtons.btn9)
 frame.Bind(wx.EVT_BUTTON, onSequenz, panelButtons.btn10)
+frame.Bind(wx.EVT_BUTTON, onCombine, panelButtons.btn11)
 frame.Bind(wx.EVT_BUTTON, onSend, panelList.sendBtn)
 for i in range(0,96):
     frame.Bind(wx.EVT_BUTTON, onQuickBtn, panelStatus.antennaButtons[i])

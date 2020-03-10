@@ -17,6 +17,7 @@ class PanelCommunicationButtons(wx.Panel):
         self.btn8 = wx.Button(self, -1, "SYS:ON")
         self.btn9 = wx.Button(self, -1, "SYS:OFF")
         self.btn10 = wx.Button(self, -1, "SEQUENZ")
+        self.btn11 = wx.Button(self, -1, "COMBINE")
         
         self.btn3.Disable()
         self.btn4.Disable() 
@@ -39,6 +40,8 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt10_2 = wx.TextCtrl(self, size=(20, -1))
         self.txt10_3 = wx.TextCtrl(self, size=(20, -1))
         self.txt10_4 = wx.TextCtrl(self, size=(20, -1))
+        self.txt11_1 = wx.TextCtrl(self, size=(20, -1))
+        self.txt11_2 = wx.TextCtrl(self, size=(20, -1))
         
         self.txt01.SetMaxLength(4)
         self.txt11.SetMaxLength(2)
@@ -53,6 +56,8 @@ class PanelCommunicationButtons(wx.Panel):
         self.txt10_2.SetMaxLength(2)
         self.txt10_3.SetMaxLength(2)
         self.txt10_4.SetMaxLength(2)
+        self.txt11_1.SetMaxLength(2)
+        self.txt11_2.SetMaxLength(2)
         
         self.btn0.requiredInput = [self.txt01]        
         self.btn1.requiredInput = [self.txt11]
@@ -61,7 +66,8 @@ class PanelCommunicationButtons(wx.Panel):
         self.btn4.requiredInput = [self.txt41, self.txt42]
         self.btn6.requiredInput = [self.txt61]
         self.btn7.requiredInput = [self.txt71]
-        self.btn10.requiredInput = [self.txt10_1, self.txt10_2, self.txt10_3, self.txt10_4]       
+        self.btn10.requiredInput = [self.txt10_1, self.txt10_2, self.txt10_3, self.txt10_4]
+        self.btn11.requiredInput = [self.txt11_1, self.txt11_2]      
 
         self.grid = wx.GridBagSizer(hgap=10, vgap=4)
         
@@ -76,7 +82,7 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.btn8, (8,0))
         self.grid.Add(self.btn9, (9,0))
         self.grid.Add(self.btn10, (10,0))
-        
+        self.grid.Add(self.btn11, (11,0))
         
         self.grid.Add(self.txt01, (0,1))
         self.grid.Add(self.txt11, (1,1))
@@ -91,6 +97,8 @@ class PanelCommunicationButtons(wx.Panel):
         self.grid.Add(self.txt10_2, (10,2))
         self.grid.Add(self.txt10_3, (10,3))
         self.grid.Add(self.txt10_4, (10,4))
+        self.grid.Add(self.txt11_1, (11,1))
+        self.grid.Add(self.txt11_2, (11,2))
         
         self.SetSizerAndFit(self.grid)
         
