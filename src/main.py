@@ -64,6 +64,7 @@ def onCombine(e):
     btn = e.GetEventObject()
     nmbr = int(btn.requiredInput[0].GetValue())
     idle = btn.requiredInput[1].GetValue()
+    panelList.addToList("ANT:ACT "+str(nmbr))
     for i in range(0,96):
         if ( i != nmbr ):
             panelList.addToList("ANT:ACT "+str(i))
@@ -71,6 +72,7 @@ def onCombine(e):
                 panelList.addToList("IDLE "+str(idle))
             panelList.addToList("ANT:DEACT "+str(i)) 
         i += 1
+    panelList.addToList("ANT:DEACT "+str(nmbr))
     
     
 def onSequenz(e):
