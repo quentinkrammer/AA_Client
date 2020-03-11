@@ -40,7 +40,8 @@ def onSend(e):
             ######Central Data Collection ######### 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
-                s.sendall( (cmd).encode() ) 
+                #s.sendall( ("\n"+cmd+"\n").encode() )
+                s.sendall( (cmd).encode() )  
             ######Central Data Collection #########  
             nmbr = re.search(r'\d+', cmd).group() 
             c = panelStatus.toggleAntenna(nmbr)
@@ -102,13 +103,21 @@ def onSequenz(e):
         for i in range(min, max, stepSize):
             if i+stepSize < max:        
                 panelList.addToList(deactivate+str(i))                          
-                panelList.addToList(activate+str(i+stepSize))            
+                panelList.addToList(activate+str(i+stepSize))
+            else:
+                #panelList.addToList(idle+str(idleTime))
+                panelList.addToList(deactivate+str(i))      
     else:        
         for i in range(min, max, stepSize):
             if i+stepSize < max:  
                 panelList.addToList(idle+str(idleTime))
                 panelList.addToList(deactivate+str(i))                           
-                panelList.addToList(activate+str(i+stepSize)) 
+                panelList.addToList(activate+str(i+stepSize))
+            else:
+                panelList.addToList(idle+str(idleTime))
+                panelList.addToList(deactivate+str(i))   
+#     panelList.addToList(idle+str(idleTime))
+#     panelList.addToList(deactivate+str(i)) 
             
 
 HOST = '127.0.0.1'  
