@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import wx
 import os
 import time
@@ -12,7 +11,9 @@ from PanelCommunicationList import PanelCommunicationList
 from PanelAntennaStatus import PanelAntennaStatus
 from PanelReceive import PanelReceive
 from MainWindow import MainWindow
+from Logger import Logger
 from datetime import datetime
+
 
 def onBtn(e):
     btn = e.GetEventObject()        
@@ -34,31 +35,12 @@ def onQuickBtn(e):
     onSend(e)
     
 def onSend(e):
-    filename = datetime.now()
-    #filename = filename.replace(microsecond=0)
-    filename = str(filename)
-    filename = filename.replace(":", "-")
-    filename = filename.replace(" ", "_")
-    filename = filename+".txt"
-    f = open(filename, "w")
-    f.close()
+    logger = Logger()    
     for listeEle in panelList.list.GetChildren():
         cmd = listeEle.GetLabel()
         if not "IDLE" in cmd:
             replies = ser.parseCmd(cmd)
-            ######Central Data Collection #########
-            f = open(filename, "a")
-            timestamp = str(datetime.now())
-            timestamp += " & "            
-            f.write(timestamp)
-            f.write(cmd+"\n")
-            f.close()
-             
-#             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-#                 s.connect((HOST, PORT))
-#                 #s.sendall( ("\n"+cmd+"\n").encode() )
-#                 s.sendall( (cmd).encode() )  
-            ######Central Data Collection #########  
+            logger.logAction(cmd)
             nmbr = re.search(r'\d+', cmd).group() 
             c = panelStatus.toggleAntenna(nmbr)
             for reply in replies:
