@@ -4,7 +4,7 @@ import serial
 
 class SerialCommunication:    
     
-    def __init__(self, baudrate=115200, port="COM16"):
+    def __init__(self, baudrate=115200, port="COM5"):
         self.ser = serial.Serial()
         self.ser.baudrate = baudrate
         self.ser.port = port
